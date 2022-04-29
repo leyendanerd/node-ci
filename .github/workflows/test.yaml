@@ -1,4 +1,4 @@
-name: node test
+name: node test and deploy 
 
 on: 
   push:
