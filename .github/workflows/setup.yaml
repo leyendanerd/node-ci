@@ -1,4 +1,4 @@
-name: counter Test
+name: node test 
 
 on: 
   push:
