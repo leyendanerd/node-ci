@@ -68,7 +68,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: create droplet
-        run: doctl compute droplet create node-ci --image docker-19-03-12 --size s-1vcpu-1gb --region nyc1 --user-data-file deployvps.sh --wait
+        run: doctl compute droplet create node-ci --image docker-18-04 --size s-1vcpu-1gb --region nyc1 --user-data-file deployvps.sh --wait
      
 
 
