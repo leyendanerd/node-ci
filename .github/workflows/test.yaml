@@ -21,6 +21,8 @@ jobs:
           node-version: 14 
       - run: npm install
       - run: npm test
+      - run: apt update 
+      - run: apt install nginx 
 
 
 
