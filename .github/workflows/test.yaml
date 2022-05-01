@@ -30,7 +30,7 @@ jobs:
       - run: npm install
       - run: npm test
       
-      
+
   build_dockerhub:
     name: Build application on dockerhub
     needs: [build_test]
@@ -57,17 +57,30 @@ jobs:
    
  
   terraform:
-    name: "Terraform"
+    name: " Deploy terraform"
     needs: [build_dockerhub]
     runs-on: ubuntu-latest
     
     steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
-      - name: Terraform Workflow
-        working-directory: do_terraform
-        run: |
-          terraform init
-          terraform terraform plan
-          terraform terraform apply -auto-approve
+      - name: Terraform Init
+        working-directory: do-terraform
+        run: terraform init
+
+      - name: Terraform Format
+        working-directory: do-terraform
+        run: terraform fmt
+
+      - name: Terraform Plan
+        working-directory: do-terraform
+        run: terraform plan
+
+      - name: Terraform Apply
+        working-directory: do-terraform
+        run: terraform apply -auto-approve
