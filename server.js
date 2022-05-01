@@ -9,7 +9,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Lab: terraform and github actions, IP flotante hola');
+  res.send('Laboratio: terraform and github actions, IP flotante hola');
 });
 
 app.listen(PORT, HOST);
