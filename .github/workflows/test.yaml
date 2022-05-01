@@ -63,8 +63,12 @@ jobs:
     
     steps:
 
+      
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Delete old terraform working-directory
+        run: rm -rf .terraform
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
