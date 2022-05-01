@@ -1,4 +1,4 @@
-name: node test
+name: node test v12,14
 
 on: 
   push:
@@ -10,11 +10,11 @@ on:
       - master  
       
 jobs:
-  build:
+  build_test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ 12, 14, 16 ]
+        node: [ 12, 14 ]
     name: Node ${{ matrix.node }} sample
     steps:
       - uses: actions/checkout@v3
@@ -24,3 +24,9 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm install
       - run: npm test
+
+
+  
+  build_docker:
+     runs-on: ubuntu-latest
+     
