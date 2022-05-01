@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: node test v12,14
+=======
+name: node test CI and deploy 
+>>>>>>> 76d92c84480c052fa6b2a066c19bf3dc8062a838
 
 on: 
   push:
@@ -8,25 +12,106 @@ on:
   pull_request:
      branches:
       - master  
+env:
+  SERVICE_NAME: julio0619/node-ci
       
 jobs:
   build_test:
     runs-on: ubuntu-latest
+<<<<<<< HEAD
     strategy:
       matrix:
         node: [ 12, 14 ]
     name: Node ${{ matrix.node }} sample
+=======
+
+>>>>>>> 76d92c84480c052fa6b2a066c19bf3dc8062a838
     steps:
       - uses: actions/checkout@v3
-      - name: Setup node
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 14 
       - run: npm install
       - run: npm test
 
+<<<<<<< HEAD
 
   
   build_docker:
      runs-on: ubuntu-latest
      
+=======
+  build_dockerhub:
+    name: Build application on dockerhub
+    needs: [build_test]
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ env.SERVICE_NAME }}
+
+    
+ 
+  terraform:
+    name: "Terraform"
+    needs: [build_dockerhub]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          # terraform_version: 0.13.0:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+      
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        if: github.event_name == 'pull_request'
+        run: terraform plan -no-color -input=false
+        continue-on-error: true
+   
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false
+
+     
+
+
+    
+
+
+
+
+
+        
+
+>>>>>>> 76d92c84480c052fa6b2a066c19bf3dc8062a838
