@@ -52,6 +52,7 @@ jobs:
  
   terraform:
     name: "Terraform"
+    needs: [build_dockerhub]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
