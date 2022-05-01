@@ -9,7 +9,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.get('/', (req, res) => {
-  res.send('Hello World Julio Montero with terraform and github action');
+  res.send('Hello World Julio Montero with terraform and github actions');
 });
 
 app.listen(PORT, HOST);
