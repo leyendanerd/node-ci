@@ -80,6 +80,10 @@ jobs:
       - name: Terraform Format
         working-directory: do-terraform
         run: terraform fmt
+        
+      - name: Terraform validate
+        working-directory: do-terraform
+        run: terraform validate
 
       - name: Terraform Plan
         working-directory: do-terraform
